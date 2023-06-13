@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>INDEX</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineMax.min.js"></script>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/css.css">
+    <style>
+    @media(max-width:1100px) {
+        .logo img{
+            width: 100px;
+            height: 70%;
+        }
+        .hero a img{
+            width: 200px;
+            height: 70%;
+            margin-top:6rem;
+        }
+        .details h1{
+            font-size: 2.5rem;
+        }
+        .pages ul li{
+            font-size: 0.9rem;
+        }
+    }
+        
+    
+    
+    </style>
+</head>
+<body>
+    <nav>
+    
+   <h3 class="logo"> <a href="index.html"><img src="images/logo.png" alt=""></a></h3>   
+   
+    <div class="nav_sns">
+         <ul>
+            <li><a href="#"><img src="images/sns_t.png" alt=""></a></li>
+            <li><a href="#"><img src="images/sns_f.png" alt=""></a></li>
+            <li><a href="#"><img src="images/sns_i.png" alt=""></a></li>
+        </ul>        
+    </div>   
+  </nav>
+   
+   
+    
+    <div class="portfolio">
+
+ <section class="about">
+   
+   
+<!--
+    <div class="details">
+      <h1>about</h1>
+    </div>
+-->
+
+	  
+    <div class="hero"> 
+     
+        <img src="images/aa.png" alt="">
+    
+    </div>
+    <div class="about_img">
+	  	<img src="images/index/index_home.png" alt="">
+	  </div>
+    
+    
+     
+ </section>
+  
+  
+  
+
+  <section class="page cosmetice">
+    <div class="details">
+      <h1>Cosmetics</h1>
+    </div>
+    <div class="hero">
+      <a href="detail_cosmetic.html">
+        <img class="model-left" src="images/cosmetic_intro_photo01.png">           
+        <img class="model-right" src="images/cosmetic_intro_photo02.png">
+      </a>
+      
+    </div>
+  </section>
+  
+  
+  <section class="page fashion">
+    <div class="details">
+      <h1>Fashion</h1>
+    </div>
+    <div class="hero">
+      <a href="detail_fashion.html">
+        <img class="model-left" src="images/f_2.png">
+        <img class="model-right" src="images/f_1.png">
+      </a>
+    </div>
+  </section>
+  <section class="page jewerly">
+    <div class="details">
+      <h1>Jewelry</h1>
+    </div>
+    <div class="hero">
+      <a href="detail_jewelry.html">
+       <img class="model-left" src="images/jh_2.png">
+        <img class="model-right" src="images/jh_1.png">
+      </a>
+    </div>
+  </section>
+   
+  
+  
+  
+
+  <div class="pages">
+  
+   <ul>
+       <li class=""><a href="detail_about.html">ABOUT</a></li>
+       <li class="slide active">COSMETICS</li>
+       <li class="slide">FASHION</li>
+       <li class="slide">JEWELRY</li>
+   </ul>
+   
+    
+   <!-- <svg class="slide active" width="100" height="12" viewBox="0 0 12 12"xmlns="http://www.w3.org/2000/svg">
+      cosmetice
+      <circle cx="6" cy="6" r="6" fill="white" />
+      
+      
+    </svg>
+    <svg class="slide" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="6" cy="6" r="6" fill="white" />
+      fashion
+    </svg>
+    <svg class="slide" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="6" cy="6" r="6" fill="white" />
+      jewerly
+    </svg>-->
+    
+  </div>
+</div>
+    
+    
+    <script>
+			
+			
+			$(document).ready(function(){							
+				
+				$(".about_img").animate({opacity:"1"},500)
+				
+				
+				
+			})
+			
+			
+    
+    
+    function init() {
+      const slides = document.querySelectorAll('.slide');
+      const pages = document.querySelectorAll('.page');
+      const backgrounds = ['linear-gradient(to top, #d9879d 0%, #3b274e 100%)', 'linear-gradient(180deg, #513c62 0%, #f9efbd 100%)', 'linear-gradient(to top, #60a68c 0%, #5f3f7f 100%)'];
+
+      let current = 0;
+      let scrollSlide = 0;
+
+      slides.forEach((slide, index) => {
+        slide.addEventListener('click', function() {
+          /*$(".about").fadeOut();*/    
+          changeDots(this);
+          nextSlide(index);
+          scrollSlide = index; //스크롤과 슬라이드 인덱스 맞추기 
+					
+        });
+      });
+
+			function hide(){
+				
+				$(".about_img").animate({opacity:"0"},500)
+			}
+			
+			
+      function changeDots(dot) {
+        slides.forEach(slide => {
+          slide.classList.remove('active');
+        })
+        dot.classList.add('active');
+      }
+
+      function nextSlide(pageNumber) {
+        const nextPage = pages[pageNumber];
+        const currentPage = pages[current];
+        const nextLeft = nextPage.querySelector('.hero .model-left');
+        const nextRight = nextPage.querySelector('.hero .model-right');
+        const currentLeft = currentPage.querySelector('.hero .model-left');
+        const currentRight = currentPage.querySelector('.hero .model-right');
+        const currentText = currentPage.querySelector('.details');
+        const nextText = nextPage.querySelector('.details');
+        const portfolio = document.querySelector('.portfolio');
+
+
+
+        //움직임시작 
+        const tl = new TimelineMax({
+
+
+          //움직일동안은 클릭 안먹기 
+          onStart: function() {
+            slides.forEach(slide => {
+              slide.style.pointerEvents = 'none';
+            });
+          },
+          onComplete: function() {
+            slides.forEach(slide => {
+              slide.style.pointerEvents = 'all';
+            });
+          }
+        });
+
+
+
+        tl.fromTo(currentLeft, 0.3, {
+            y: "-10%"
+          }, {
+            y: "-100%"
+          })
+          .fromTo(currentRight, 0.3, {
+            y: "10%"
+          }, {
+            y: "-100%"
+          }, '-=0.2')
+          .to(portfolio, 0.3, {
+            backgroundImage: backgrounds[pageNumber]
+          })
+          .fromTo(currentText, 0.3, {
+            x: '0%'
+          }, {
+            x: '-100%'
+          }, '-=0.2')
+          .fromTo(currentPage, 0.3, {
+            opacity: 1,
+            pointerEvents: 'all'
+          }, {
+            opacity: 0,
+            pointerEvents: 'none'
+          })
+          .fromTo(nextPage, 0.3, {
+            opacity: 0,
+            pointerEvents: 'none'
+          }, {
+            opacity: 1,
+            pointerEvents: 'all'
+          }, '-=0.2')
+          .fromTo(nextText, 0.3, {
+            x: '-100%'
+          }, {
+            x: '0%'
+          }, '-=0.2')
+          .fromTo(nextLeft, 0.3, {
+            y: '-100%'
+          }, {
+            y: '-10%'
+          }, '-=0.6')
+          .fromTo(nextRight, 0.3, {
+            y: '-100%'
+          }, {
+            y: '10%'
+          }, '-=0.8')
+          .set(nextLeft, {
+            clearProps: 'all'
+          })
+          .set(nextRight, {
+            clearProps: 'all'
+          });
+
+        current = pageNumber;
+      } //nextslide 
+
+      //마우스휠 돌릴때마다 지정값주기 
+      document.addEventListener('wheel', throttle(scrollChange, 1500));
+
+      function switchDots(dotNumber) {
+        const activeDot = document.querySelectorAll(".slide")[dotNumber];
+        slides.forEach(slide => {
+          slide.classList.remove("active");
+        })
+        activeDot.classList.add("active");
+				$(".about_img").animate({opacity:"0"},200)
+				$(".hero").stop().animate({opacity:"1"},500)
+				
+      }
+
+      function scrollChange(e) {
+        if (e.deltaY > 0) {
+          scrollSlide += 1;
+        } else {
+          scrollSlide -= 1;
+        }
+        if (scrollSlide > 2) {
+          scrollSlide = 0;
+        }
+        if (scrollSlide < 0) {
+          scrollSlide = 2;
+        }
+        switchDots(scrollSlide); //active 표시를 위해 
+        nextSlide(scrollSlide); //마우스휠값 받아 슬라이드 돌리기
+      }
+
+
+
+      //메뉴 
+      const ham = document.querySelector('.menu');
+      const hamline = document.querySelectorAll('.menu line');
+      const navOpen = document.querySelector('.nav-open');
+      const logo = document.querySelector('.logo');
+
+      const tl = new TimelineMax({
+        paused: true,
+        reversed: true
+      });
+      tl.to(navOpen, 0.3, {
+          y: 0
+        })
+        .fromTo(logo, 0.2, {
+          color: 'white'
+        }, {
+          color: 'black'
+        })
+        .fromTo(hamline, 0.2, {
+          stroke: 'white'
+        }, {
+          stroke: 'black'
+        }, '-=0.2');
+
+      ham.addEventListener('click', () => {
+        tl.reversed() ? tl.play() : tl.reverse();
+      })
+
+
+
+    }
+
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => (inThrottle = false), limit);
+        }
+      };
+    }
+
+
+    init();
+    </script>
+    
+</body>
+</html>

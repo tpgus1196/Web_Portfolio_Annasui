@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //element가 스크린아래쪽에 있는지를 검사함.
+        //스크린 아래에 있으면 true 반환, 스크린보다 위에 있으면 false 반환
+        //스크린 아래쪽에 있는지 여부만 판단, IntersectionObserver 사용보다 간편
+    function isElementUnderBottom(elem, triggerDiff) {
+        const {top} = elem.getBoundingClientRect();
+        const {innerHeight} = window;
+        return top > innerHeight + (triggerDiff || 0);
+    }
+    
+        //이벤트의 핸들러 함수. 스크롤이 발생하면 이 함수 실행
+    function handleScroll() {
+        const elems = document.querySelectorAll('.up-on-scroll'); 
+                                //querySelectorAll API이용, class 이름 가진 element 모두 가져오기
+        elems.forEach(elem => {
+            if(isElementUnderBottom(elem, -20)) { 
+                //가져온 각 element가 화면보다 아래 > opacity:0, transform: translateY(70px) 스타일 적용
+                elem.style.opacity = "0";
+                elem.style.transform = 'translateY(70px)';
+            } else{
+                //element가 화면 안에 위치 > opacity:1, transform:translateY(0px) 스타일 적용
+                elem.style.opacity = "1";
+                elem.style.transfor = 'translateY(0px)';
+            }
+        })
+    }
+    
+        window.addEventListener('scroll',handleScroll);
+        
+        //스크롤하면 아래에서 element가 보일때 쯤 미리 설정한 transition 속성 통해 element가 아래에서 부드럽게 나타남.
+        //정교하게(부드러움+) 구현하려면 requestAnimationFrame API를 이용, 초당 60회 실행되도록 만들어야겠지만, 지금은 그럴 필요 없음
+            //<style>
+            //  .list .up-on-scroll {
+            //    ...
+            //    transition: transform 0.7s, opacity 1s;
+            //  }
+            //</style>
+            //적용하고싶은 요소에 클래스 집어넣고, css에도 transition 저런 식으로 넣어주면 됨
+    
+    </script>
+</body>
+</html>
